@@ -1,0 +1,26 @@
+package com.example.flights.service;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.client.RestTemplate;
+
+import com.example.flights.model.FlightBooking;
+import com.example.flights.model.Flights;
+import com.example.flights.repository.BookingRepository;
+
+public class BookingService {
+	
+	@Autowired
+	BookingRepository bookingRepository;
+	@Autowired
+	RestTemplate restTemplate;
+	
+	
+	
+	
+	public FlightBooking addBooking(String flightNumber,long bookingId) {
+		Flights flights=restTemplate.getForObject("http://localhost:9010/currentWeather/"+flightNumber,Flights.class );
+		
+		return bookingRepository.save(flightNumber,bookingId);
+	}
+
+}
